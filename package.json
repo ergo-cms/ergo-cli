@@ -1,0 +1,38 @@
+{
+  "name": "ergo-cli",
+  "version": "0.0.1",
+  "description": "Command-line interface for ergo cms",
+  "main": "index.js",
+  "bin": {
+    "ergo": "cli.js"
+  },
+  "scripts": {
+    "test": "mocha test --require test/helpers/chai.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ergo-cms/ergo-cli.git"
+  },
+  "keywords": [
+    "cms",
+    "static",
+    "website",
+    "generator",
+    "blog"
+  ],
+  "author": "cmroanirgo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ergo-cms/ergo-cli/issues"
+  },
+  "homepage": "https://github.com/ergo-cms/ergo-cli#readme",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "ergo-utils": "latest"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7"
+  }
+}
