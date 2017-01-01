@@ -7,7 +7,9 @@
     "ergo": "cli.js"
   },
   "scripts": {
-    "test": "mocha test --require test/helpers/chai.js"
+    "test": "mocha test --require test/helpers/chai.js",
+    "update_skel": "node update.js https://github.com/ergo-cms/ergo-skel.git skel",
+    "xprepublish": "npm run update_skel"
   },
   "repository": {
     "type": "git",
