@@ -34,7 +34,7 @@ l.debug = 2;
 		try {
 			api[apiName]._cli_exec(_argv)
 			.catch(function(err) {
-				l.loge(err.message);
+				l.loge(_.niceStackTrace(err));
 			})
 		}
 		catch(e) {

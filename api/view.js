@@ -7,10 +7,7 @@
 /*
 * This is the public api for 'init'
 * Returns a Promise
-*
-* (It shouldn't probably be in core, but left in cli, even though it might be used by other systems.)
 */
-var l = require('ergo-utils').log;
 
 module.exports = require('./api-base')(
  		'view', 				// this api method name
