@@ -1,4 +1,8 @@
 
+/*
+* This script just does a git clone, or a git pull
+* This should exist in ergo-core
+*/
 "use strict";
 
 var path = require('path');
@@ -23,12 +27,12 @@ var execFile = require('child_process').execFile;
 		showHelp("No destination specified");
 	
 	var repo = argv._[0];
-	var folder = argv._[1];
+	var dir = argv._[1];
 
-	if (_.dirExistsSync(folder))
-		run('git','-C', folder, 'pull','origin','master')
+	if (_.dirExistsSync(dir))
+		run('git','-C', dir, 'pull','origin','master')
 	else
-		run('git', 'clone', repo, folder)
+		run('git', 'clone', repo, dir)
 	
 })(process.argv.slice(2));
 

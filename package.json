@@ -29,12 +29,18 @@
   },
   "homepage": "https://github.com/ergo-cms/ergo-cli#readme",
   "dependencies": {
-    "minimist": "^1.2.0",
-    "ergo-utils": "latest"
+    "bluebird": "^3.4.7",
+    "ergo-utils": "latest",
+    "ergo-core": "latest",
+    "fs-extra": "^1.0.0",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.2.0",
     "sinon": "^1.17.7"
-  }
+  },
+  "unusedDeps": {
+    "babel-polyfill": "^6.20.0",
+}
 }

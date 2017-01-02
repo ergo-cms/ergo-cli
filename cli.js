@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * @license MIT
  * Copyright (c) 2016 Craig Monro (cmroanirgo)
@@ -6,31 +7,45 @@
  **/
 
 "use strict";
-var ergo = require('./index');
+var bluebird = require('bluebird');
 var path = require('path');
 var fs = require('fs');
 var l = require('ergo-utils').log.module('ergo-cli');
 var _ = require('ergo-utils')._;
+var api = require('./api/index');
 
+l.debug = 2;
 
 
 (function main(_argv) {
 	var argv = cli(_argv);
-	l.init(argsToOptions(argv));
+	l.init(argv);
 
 	// process the options
-	l.logd('begin')
 	if (argv._.length<1)
-		showHelp("No command specified");
-	
-	if (argv._[0]=='init') {
-		if (argv._.length<2)
-			showHelp("No folder specified for init");
-		ergo.init(argv._[1], argsToOptions(argv));
+		showHelp(argv.help ? undefined : "No command specified");
+
+	var apiName = argv._[0];
+	l.logd('api command: ' + apiName)
+	if (_.isDefined(api[apiName])) {
+		if (argv.help)
+			showComandHelp(apiName, api[apiName]);
+
+		try {
+			api[apiName]._cli_exec(_argv)
+			.catch(function(err) {
+				l.loge(err.message);
+			})
+		}
+		catch(e) {
+			// we catch errors that aren't promisified yet. These are the setup exceptions, such as missing parameters.
+			// This is a good thing
+			l.logd(e.toString())
+			showComandHelp(apiName, api[apiName], e.message);
+		}
 	}
-	else {
-		showHelp("Unknown command: "+argv._[0]);
-	}
+	else 
+		showHelp("Unknown ergo command '"+apiName+"'");
 
 })(process.argv.slice(2));
 
@@ -47,38 +62,58 @@ function cli(args, options) {
 	return require('minimist')(args, options);
 }
 
-function argsToOptions(args) {
-	return {
-		verbose: args.verbose
-		, debug: args.debug
-		, quiet: args.quiet
-		, force: args.force
-	}
-}
-
 
 function showHelp(str) {
 	if (str) {
 		l.loge(str);
 	}
+
+	var commandsStr = [];
+	var apiNames = Object.keys(api).sort();
+	for (var i=0; i<apiNames.length; i++) {
+		var str = apiNames[i];
+		var apiLib = api[str];
+		var paramNames = apiLib.getRequiredParamNames().join(' ');
+		if (paramNames.length)
+			paramNames = ' ' + paramNames;
+		commandsStr.push('\t'+str + paramNames)
+	}
+
 	console.log(
 		"USAGE:\n" +
 		"\tergo command [options]\n" +
 		"\n"+
 		"Valid commands are:\n"+
-		"\tinit folder            Creates a new site in 'folder'\n"+
-		"\t                       eg. 'ergo init MyBlog'\n"+
-		"\t                       Use 'ergo init . -f' to force creation in the current folder.\n"+
+		commandsStr.join('\n')+
 		"\n"+
 		"WHERE:\n"+
-		"\t\n"+
-		"\t--force, -f            Removes safety restraints and forces the command to occur\n" +
+		"\t--quiet,   -q          No output, except for warnings and errors\n" +
+		"\t--verbose, -v          Verbose output. use -v2 or --verbose=2 for extra verbose\n" +
+		"\t--help,    -h          Show Help. You can also use 'ergo [command] --help'\n" +
+		"");
+	process.exit(-1);
+}
+
+function showComandHelp(apiName, apiLib, str) {
+	if (str)
+		l.loge(str);
+
+	var paramNames = apiLib.getRequiredParamNames().join(' ');
+	if (paramNames.length)
+		paramNames = ' ' + paramNames;
+
+	console.log(
+		"USAGE:\n" +
+		"\tergo "+apiName+paramNames+" [options]\n" +
+		"\n"+
+		"WHERE:\n"+
+		apiLib.getHelp()+
 		"\t--quiet, -q            No output, except for warnings and errors\n" +
 		"\t--verbose, -v          Verbose output. use -v2 or --verbose=2 for extra verbose\n" +
 		
 
 		"");
 	process.exit(-1);
-}
 
+}
 
