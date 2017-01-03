@@ -14,8 +14,6 @@ var l = require('ergo-utils').log.module('ergo-cli');
 var _ = require('ergo-utils')._;
 var api = require('./api/index');
 
-l.debug = 2;
-
 
 (function main(_argv) {
 	var argv = cli(_argv);
@@ -75,21 +73,23 @@ function showHelp(str) {
 		var apiLib = api[str];
 		var paramNames = apiLib.getRequiredParamNames().join(' ');
 		if (paramNames.length)
-			paramNames = ' ' + paramNames;
-		commandsStr.push('\t'+str + paramNames)
+			paramNames = ' [' + paramNames + ']';
+		commandsStr.push('\t'+str + paramNames + '\n')
 	}
 
 	console.log(
 		"USAGE:\n" +
-		"\tergo command [options]\n" +
+		"\tergo command [options]\n" +  
 		"\n"+
 		"Valid commands are:\n"+
-		commandsStr.join('\n')+
+		commandsStr.join('')+ 
 		"\n"+
-		"WHERE:\n"+
-		"\t--quiet,   -q          No output, except for warnings and errors\n" +
-		"\t--verbose, -v          Verbose output. use -v2 or --verbose=2 for extra verbose\n" +
-		"\t--help,    -h          Show Help. You can also use 'ergo [command] --help'\n" +
+		"\tUse 'ergo command --help', for help on a specific command\n" +
+		"\n"+
+		"WHERE:\n"+ 
+		"\t-q, --quiet            No output, except for warnings and errors\n" +
+		"\t-v, --verbose          Verbose output. Use -v2 or --verbose=2 for extra verbosity\n" +
+		"\t-h, --help             Show help\n" +
 		"");
 	process.exit(-1);
 }
@@ -108,8 +108,9 @@ function showComandHelp(apiName, apiLib, str) {
 		"\n"+
 		"WHERE:\n"+
 		apiLib.getHelp()+
-		"\t--quiet, -q            No output, except for warnings and errors\n" +
-		"\t--verbose, -v          Verbose output. use -v2 or --verbose=2 for extra verbose\n" +
+		"\t-q, --quiet            No output, except for warnings and errors\n" +
+		"\t-v, --verbose          Verbose output. use -v2 or --verbose=2 for extra verbose\n" +
+		"\t-h, --help             Show help for this command\n" +
 		
 
 		"");

@@ -15,7 +15,7 @@ module.exports = require('./api-base')(
 		{'p': 'port'},			// commandline aliases
 		"\tview                   Starts the local webserver running\n"+
 		"\t                       eg. 'ergo view'\n"+
-		"\t--port=81, -p81        Changes the port to use port 81, (by default it's 8181)\n" +
+		"\t-p81, --port=81        Changes the port to use port 81, (by default it's 8181)\n" +
 		"" 		
  	);
 

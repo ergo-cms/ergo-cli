@@ -10,7 +10,7 @@ module.exports = require('./api-base')(
 		"\tinit dir               Creates a new site in 'dir'\n"+
 		"\t                       eg. 'ergo init MyBlog'\n"+
 		"\t                       Use 'ergo init . -f' to force creation in the current dir.\n"+
-		"\t--force, -f            Removes safety restraints and forces the command to occur\n" +
+		"\t-f, --force            Removes safety restraints and forces the command to occur\n" +
 		"" 		
  	);
 
