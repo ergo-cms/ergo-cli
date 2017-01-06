@@ -12,10 +12,14 @@
 module.exports = require('./api-base')(
  		'view', 				// this api method name
  		undefined, 				// no required parameters
-		{'p': 'port'},			// commandline aliases
+		{						// commandline aliases:
+			 'p': 'port'
+ 			,'w': 'watch'
+		},			
 		"\tview                   Starts the local webserver running\n"+
 		"\t                       eg. 'ergo view'\n"+
 		"\t-p81, --port=81        Changes the port to use port 81, (by default it's 8181)\n" +
+		"\t-w, --watch            Watches the source folder for changes & rebuild.\n" +
 		"" 		
  	);
 
