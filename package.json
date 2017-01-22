@@ -30,8 +30,9 @@
   "homepage": "https://github.com/ergo-cms/ergo-cli#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
-    "ergo-utils": "latest",
+    "cli-spinner": "^0.2.5",
     "ergo-core": "latest",
+    "ergo-utils": "latest",
     "fs-extra": "^1.0.0",
     "minimist": "^1.2.0"
   },
