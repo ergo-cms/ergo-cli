@@ -38,7 +38,7 @@ var api = require('./api/index');
 		catch(e) {
 			// we catch errors that aren't promisified yet. These are the setup exceptions, such as missing parameters.
 			// This is a good thing
-			l.logd(e.toString())
+			l.logd(_.niceStackTrace(e))
 			showComandHelp(apiName, api[apiName], e.message);
 		}
 	}
