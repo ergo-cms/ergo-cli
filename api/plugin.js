@@ -16,11 +16,15 @@ module.exports = require('./api-base')(
 //			 'p': 'port'
 		},			
 		"\tplugin install name    Installs the named plugin into the current working folder\n"+
+		"\t                              and activates it\n"+
 		"\t                       eg. 'ergo plugin install nextprev'\n"+
 		"\t                       eg. 'ergo plugin install github:some-repo/other-plugin'\n"+
 		"\tplugin remove name     Removes the plugin\n"+
+		"\tplugin activate name   (Re)activates the plugin\n"+
+		"\tplugin deactivate name Deactivates the plugin, but does not remove it\n"+
 		"\tplugin list            Lists the installed plugins\n"+
 		"\t                       eg. 'ergo plugin list'\n"+
+		"\tplugin active          Lists the active installed plugins\n"+
 		"" 		
  	);
 
@@ -56,7 +60,14 @@ module.exports.plugin = function(command, options) {
 		case 'rm'     :  
 		case 'remove' :  if (!name) throw Error("Expected name"); return plugin_api.remove(name, options);
 
+		case 'a'        :  
+		case 'activate' :  if (!name) throw Error("Expected name"); return plugin_api.activate(name, true, options);
+
+		case 'd'          :  
+		case 'deactivate' :  if (!name) throw Error("Expected name"); return plugin_api.activate(name, false, options);
+
 		case 'list'   : return plugin_api.list(options);
+		case 'active' : return plugin_api.listActive(options);
 		default:
 			throw new Error("Unknown command: " + command)
 	}
