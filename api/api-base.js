@@ -48,7 +48,7 @@ Api.prototype._cli_exec = function(command_args) {
 	var args = command_args._.slice(0,this._numParams); // clone the required parameters
 	args.push(command_args); // ... and then add all the options received as the final param
 	if (!_.isDefined(this[this._name]))
-		throw new Error('API function ' + this._name + ' is missing'); // this is a bad food error by devs
+		throw new Error('It seems that module.exports.' + this._name + ' = function(... is missing in cli/api/'+this._name+'.js ...'); // this is a bad food error by devs
 
 	l.vlogd("api fn '"+this._name + "' exists: " + _.isFunction(this[this._name]))	
 	return this[this._name].apply(this, args);

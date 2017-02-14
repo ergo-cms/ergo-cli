@@ -11,7 +11,7 @@
 var l  = require('ergo-utils').log;
 module.exports = require('./api-base')(
  		'plugin', 				// this api method name
- 		'command', 		
+ 		'command', 		// required param
 		{						// commandline aliases:
 //			 'p': 'port'
 		},			
