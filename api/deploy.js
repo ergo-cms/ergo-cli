@@ -5,26 +5,26 @@
 
 
 /*
-* This is the public api for 'sync'
+* This is the public api for 'deploy'
 * Returns a Promise
 */
 
 var l  = require('ergo-utils').log;
 var _  = require('ergo-utils')._;
 module.exports = require('./api-base')(
- 		'sync', 				// this api method name
+ 		'deploy', 				// this api method name
  		null, 		
 		{						// commandline aliases:
 			 'f': 'force',
 			 //'u': 'user',
 		},			
-		"\tsync                   Compares and updates from server info stored in config.ergo.js in 'project_sync'\n"+
+		"\tdeploy                   Uploads to server. Config is stored in config.ergo.js under 'deploy'\n"+
 		"" 		
  	);
 
 var Spinner = require('cli-spinner').Spinner;
 
-module.exports.sync = function(options) {
+module.exports.deploy = function(options) {
 	var sync_api = require('ergo-core').sync;
 	/*var spinner;
 	if (l._verbosity()>-1) {
@@ -34,7 +34,7 @@ module.exports.sync = function(options) {
 	}*/
 	//console.log(require("util").inspect(options, {color:true}));
 
-	return sync_api.sync(options)
+	return sync_api.deploy(options)
 		.then(function(result) {
 			//if (spinner) spinner.stop(true);spinner = null; 
 			l.log(result ? "OK" : "Failed")
